@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgGlow3" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#4a0e14"/>
+      <stop offset="50%" stop-color="#19060a"/>
+      <stop offset="100%" stop-color="#080204"/>
+    </radialGradient>
+    <linearGradient id="gold3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd584"/>
+      <stop offset="50%" stop-color="#dfb458"/>
+      <stop offset="100%" stop-color="#947124"/>
+    </linearGradient>
+    <linearGradient id="red3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff2e48"/>
+      <stop offset="60%" stop-color="#d7192d"/>
+      <stop offset="100%" stop-color="#5a040e"/>
+    </linearGradient>
+    <filter id="glow3" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="800" fill="url(#bgGlow3)"/>
+
+  <!-- Chaotic Slash Marks Background -->
+  <g opacity="0.12" stroke="#ff2e48" stroke-width="2" stroke-linecap="round">
+    <line x1="80" y1="120" x2="520" y2="680"/>
+    <line x1="520" y1="160" x2="80" y2="700"/>
+    <line x1="120" y1="380" x2="480" y2="420"/>
+  </g>
+
+  <!-- Frame Borders -->
+  <rect x="25" y="25" width="550" height="750" fill="none" stroke="url(#gold3)" stroke-width="1" opacity="0.4"/>
+  <rect x="35" y="35" width="530" height="730" fill="none" stroke="#d7192d" stroke-width="1" opacity="0.5"/>
+
+  <!-- Ornate Corner Filigree -->
+  <g stroke="url(#gold3)" stroke-width="1.5" fill="none" opacity="0.8">
+    <path d="M25,55 L55,55 L55,25"/>
+    <path d="M575,55 L545,55 L545,25"/>
+    <path d="M25,745 L55,745 L55,775"/>
+    <path d="M575,745 L545,745 L545,775"/>
+  </g>
+
+  <!-- Central Silhouette: Anarchy Sigil & Blood-Dripped Frat Bat / Dagger -->
+  <g transform="translate(300, 360)">
+    <!-- Red Halo -->
+    <circle cx="0" cy="-10" r="145" fill="#ff2e48" opacity="0.18" filter="url(#glow3)"/>
+
+    <!-- Anarchy / Chaos Greek Circle -->
+    <circle cx="0" cy="0" r="95" fill="none" stroke="url(#gold3)" stroke-width="2.5" opacity="0.85"/>
+
+    <!-- Distressed Frat Spikes -->
+    <path d="M-80,-60 L-30,-20 L0,-115 L30,-20 L80,-60 L45,15 L95,65 L25,55 L0,120 L-25,55 L-95,65 L-45,15 Z" 
+          fill="#1c0409" stroke="url(#red3)" stroke-width="2"/>
+
+    <!-- Skull Silhouette In Center -->
+    <g transform="translate(0, 0)">
+      <circle cx="0" cy="-15" r="32" fill="#2d0610" stroke="url(#gold3)" stroke-width="1.8"/>
+      <!-- Eyes -->
+      <ellipse cx="-12" cy="-18" rx="7" ry="8" fill="#080204"/>
+      <ellipse cx="12" cy="-18" rx="7" ry="8" fill="#080204"/>
+      <!-- Nose -->
+      <polygon points="0,-8 -4,-2 4,-2" fill="#080204"/>
+      <!-- Jaw with stitches -->
+      <path d="M-15,5 L15,5 L10,18 L-10,18 Z" fill="#2d0610" stroke="url(#gold3)" stroke-width="1.4"/>
+      <line x1="-8" y1="5" x2="-8" y2="18" stroke="url(#gold3)" stroke-width="1"/>
+      <line x1="0" y1="5" x2="0" y2="18" stroke="url(#gold3)" stroke-width="1"/>
+      <line x1="8" y1="5" x2="8" y2="18" stroke="url(#gold3)" stroke-width="1"/>
+    </g>
+
+    <!-- Blood Drips -->
+    <path d="M-40,80 Q-40,115 -35,115 Q-30,115 -30,80" fill="#d7192d"/>
+    <path d="M0,95 Q0,135 6,135 Q12,135 12,95" fill="#ff2e48"/>
+    <path d="M35,80 Q35,120 40,120 Q45,120 45,80" fill="#d7192d"/>
+  </g>
+</svg>
