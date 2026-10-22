@@ -417,7 +417,7 @@ export const HalloweenLandingPage: React.FC = () => {
               {ticket.regularBirdState.isLocked && (
                 <div className="hero-locked-hint">
                   <Lock size={12} className="hero-lock-icon" />
-                  <span>Regular Bird (₹2,199) unlocks Oct 26 at 12:01 AM IST</span>
+                  <span>Regular Bird (₹2,199) unlocks Oct 26</span>
                 </div>
               )}
               {ticket.regularBirdState.isOpen && (
@@ -751,7 +751,7 @@ export const HalloweenLandingPage: React.FC = () => {
                 <span className="tier-price-cur">INR</span>
               </div>
               <span className="tier-tax-label">
-                {ticket.earlyBirdState.isOpen ? "All taxes inclusive · First 50 spots" : "Allocation ended on 26 Oct, 12:00 AM IST"}
+                {ticket.earlyBirdState.isOpen ? "All taxes inclusive · First 50 spots" : "Allocation ended on 26 Oct"}
               </span>
             </div>
 
@@ -806,7 +806,7 @@ export const HalloweenLandingPage: React.FC = () => {
                 </button>
               )}
               <span className="tier-card-footer-note">
-                {ticket.earlyBirdState.isOpen ? "Available until 25 Oct, 11:59 PM IST" : "Sales ended on 26 Oct, 12:00 AM IST"}
+                {ticket.earlyBirdState.isOpen ? "Available until 25 Oct" : "Sales ended on 26 Oct"}
               </span>
             </div>
           </div>
@@ -854,10 +854,10 @@ export const HalloweenLandingPage: React.FC = () => {
                 {ticket.regularBirdState.isLocked
                   ? "Unlocks automatically once Early Bird ends"
                   : ticket.regularBirdState.isTransitioning
-                  ? "Price update in progress — opens at 12:01 AM"
+                  ? "Price update in progress — opens 26 Oct"
                   : ticket.regularBirdState.isOpen
                   ? "All taxes inclusive · Final 50 spots"
-                  : "Sales ended on 31 Oct, 2:00 PM IST"}
+                  : "Sales ended on 31 Oct"}
               </span>
             </div>
 
@@ -887,7 +887,7 @@ export const HalloweenLandingPage: React.FC = () => {
                   disabled
                   className="halloween-cta-disabled tier-cta-locked-btn"
                   aria-disabled="true"
-                  title="Locked until Early Bird ends. Unlocks 26 Oct at 12:01 AM IST."
+                  title="Locked until Early Bird ends. Unlocks 26 Oct."
                 >
                   <Lock size={15} className="tier-btn-icon" />
                   <span>LOCKED TILL EARLY BIRD ENDS</span>
@@ -934,9 +934,9 @@ export const HalloweenLandingPage: React.FC = () => {
               )}
               <span className="tier-card-footer-note">
                 {ticket.regularBirdState.isLocked
-                  ? "Unlocks automatically 26 Oct, 12:01 AM IST"
+                  ? "Unlocks automatically on 26 Oct"
                   : ticket.regularBirdState.isOpen
-                  ? "Available until 31 Oct, 2:00 PM IST"
+                  ? "Available until 31 Oct"
                   : "Sales closed"}
               </span>
             </div>

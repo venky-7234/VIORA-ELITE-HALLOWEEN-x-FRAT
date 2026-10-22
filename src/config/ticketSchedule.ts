@@ -48,7 +48,7 @@ export const TICKET_SCHEDULE_CONFIG = {
     formattedPrice: "₹1,799",
     allocation: 50,
     allocationText: "50 tickets allocated",
-    widgetUrl: "https://konfhub.com/widget/id/f48412d2-b3ce-45e8-a64a-6d3a9df7b257",
+    widgetUrl: "https://konfhub.com/widget/id/f48412d2-b3ce-45e8-a64a-6d3a9df7b257?ticketId=124554%7C1",
     label: "EARLY BIRD",
     tierName: "EARLY BIRD PASS",
     ctaLabel: "BOOK EARLY BIRD",
@@ -73,7 +73,7 @@ export const TICKET_SCHEDULE_CONFIG = {
     formattedPrice: "₹2,199",
     allocation: 50,
     allocationText: "50 tickets allocated",
-    widgetUrl: "https://konfhub.com/widget/id/285d672d-5ed6-4787-8c21-ea099ad00b79",
+    widgetUrl: "https://konfhub.com/widget/id/285d672d-5ed6-4787-8c21-ea099ad00b79?ticketId=124982%7C1",
     label: "REGULAR BIRD",
     tierName: "REGULAR BIRD PASS",
     ctaLabel: "BOOK REGULAR BIRD",
@@ -153,7 +153,7 @@ export function getTicketPhaseInfo(currentTimeMs: number = getSimulatedOrCurrent
         ctaText: earlyBird.ctaLabel,
         ctaFullText: earlyBird.ctaFullLabel,
         badgeText: "ACTIVE NOW",
-        availabilityNote: "Available until 25 October 2026, 11:59 PM IST",
+        availabilityNote: "Available until 25 October 2026",
       }
     : {
         id: "early_bird",
@@ -171,7 +171,7 @@ export function getTicketPhaseInfo(currentTimeMs: number = getSimulatedOrCurrent
         ctaText: "EARLY BIRD ENDED",
         ctaFullText: "EARLY BIRD ENDED",
         badgeText: "TIER CLOSED",
-        availabilityNote: "Closed on 26 October 2026 at 12:00 AM IST",
+        availabilityNote: "Closed on 26 October 2026",
       };
 
   // 2. Evaluate Individual Regular Bird State
@@ -194,7 +194,7 @@ export function getTicketPhaseInfo(currentTimeMs: number = getSimulatedOrCurrent
       ctaText: "LOCKED TILL EARLY BIRD ENDS",
       ctaFullText: "🔒 LOCKED · OPENS 26 OCT",
       badgeText: "🔒 LOCKED TILL 26 OCT",
-      availabilityNote: "Unlocks automatically on 26 Oct 2026 at 12:01 AM IST once Early Bird closes",
+      availabilityNote: "Unlocks automatically on 26 Oct 2026 once Early Bird closes",
     };
   } else if (currentTimeMs < transitioning.endTimeMs) {
     // 1-minute buffer: TRANSITIONING
@@ -214,7 +214,7 @@ export function getTicketPhaseInfo(currentTimeMs: number = getSimulatedOrCurrent
       ctaText: "PRICES UPDATING — PLEASE WAIT",
       ctaFullText: "PRICES UPDATING",
       badgeText: "UPDATING",
-      availabilityNote: "Ticket prices are updating — opens at 12:01 AM IST",
+      availabilityNote: "Ticket prices are updating — opens 26 Oct",
     };
   } else if (currentTimeMs < regularBird.endTimeMs) {
     // From 26 Oct 12:01 AM to 31 Oct 2:00 PM: OPEN
@@ -234,7 +234,7 @@ export function getTicketPhaseInfo(currentTimeMs: number = getSimulatedOrCurrent
       ctaText: regularBird.ctaLabel,
       ctaFullText: regularBird.ctaFullLabel,
       badgeText: "ACTIVE NOW",
-      availabilityNote: "Available until 31 October 2026, 2:00 PM IST",
+      availabilityNote: "Available until 31 October 2026",
     };
   } else {
     // After 31 Oct 2:00 PM: CLOSED
@@ -254,7 +254,7 @@ export function getTicketPhaseInfo(currentTimeMs: number = getSimulatedOrCurrent
       ctaText: "TICKET SALES CLOSED",
       ctaFullText: "SALES CLOSED",
       badgeText: "CLOSED",
-      availabilityNote: "Sales closed on 31 October 2026, 2:00 PM IST",
+      availabilityNote: "Sales closed on 31 October 2026",
     };
   }
 
@@ -273,7 +273,7 @@ export function getTicketPhaseInfo(currentTimeMs: number = getSimulatedOrCurrent
       isClosed: false,
       isTransitioning: false,
       allocationText: earlyBird.allocationText,
-      scheduleDescription: "Available until 25 October 2026, 11:59 PM IST",
+      scheduleDescription: "Available until 25 October 2026",
       earlyBirdState,
       regularBirdState,
     };
@@ -316,7 +316,7 @@ export function getTicketPhaseInfo(currentTimeMs: number = getSimulatedOrCurrent
       isClosed: false,
       isTransitioning: false,
       allocationText: regularBird.allocationText,
-      scheduleDescription: "Available until 31 October 2026, 2:00 PM IST",
+      scheduleDescription: "Available until 31 October 2026",
       earlyBirdState,
       regularBirdState,
     };
@@ -337,7 +337,7 @@ export function getTicketPhaseInfo(currentTimeMs: number = getSimulatedOrCurrent
     isTransitioning: false,
     allocationText: "Sales closed",
     statusMessage: closed.message,
-    scheduleDescription: "Sales ended on 31 October 2026, 2:00 PM IST",
+    scheduleDescription: "Sales ended on 31 October 2026",
     earlyBirdState,
     regularBirdState,
   };

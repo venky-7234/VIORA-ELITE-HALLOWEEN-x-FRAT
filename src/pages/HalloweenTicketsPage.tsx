@@ -126,7 +126,7 @@ export const HalloweenTicketsPage: React.FC = () => {
               </div>
               <div className="meta-badge-item">
                 <Clock size={14} className="meta-icon" />
-                <span>10:30 PM Onwards</span>
+                <span>6:00 PM Onwards</span>
               </div>
               <div className="meta-badge-item">
                 <MapPin size={14} className="meta-icon" />
@@ -223,7 +223,7 @@ export const HalloweenTicketsPage: React.FC = () => {
                 <span>Transitioning to Regular Bird Tier (₹2,199)</span>
               </div>
               <p className="status-card-auto-hint">
-                This page will automatically refresh as soon as Regular Bird sales open at 12:01 AM IST.
+                This page will automatically refresh as soon as Regular Bird sales open on 26 Oct.
               </p>
             </div>
           ) : (

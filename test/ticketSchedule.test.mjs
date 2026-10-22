@@ -19,7 +19,7 @@ test("1. Before Early Bird ends: returns early_bird tier, ₹1,799, exact widget
   assert.equal(info.ctaFullLabel, "BOOK EARLY BIRD · ₹1,799");
   assert.equal(
     info.widgetUrl,
-    "https://konfhub.com/widget/id/f48412d2-b3ce-45e8-a64a-6d3a9df7b257"
+    "https://konfhub.com/widget/id/f48412d2-b3ce-45e8-a64a-6d3a9df7b257?ticketId=124554%7C1"
   );
   assert.equal(info.isBookingEnabled, true);
   assert.equal(info.isClosed, false);
@@ -69,7 +69,7 @@ test("3. From Regular Bird start (26 Oct 12:01 AM IST): returns regular_bird tie
   assert.equal(info.ctaFullLabel, "BOOK REGULAR BIRD · ₹2,199");
   assert.equal(
     info.widgetUrl,
-    "https://konfhub.com/widget/id/285d672d-5ed6-4787-8c21-ea099ad00b79"
+    "https://konfhub.com/widget/id/285d672d-5ed6-4787-8c21-ea099ad00b79?ticketId=124982%7C1"
   );
   assert.equal(info.isBookingEnabled, true);
   assert.equal(info.isClosed, false);
