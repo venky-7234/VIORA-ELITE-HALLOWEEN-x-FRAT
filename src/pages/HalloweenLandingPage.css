@@ -1755,7 +1755,7 @@
 .halloween-page .halloween-cta { border-color:#d0192e88; }
 .halloween-page .halloween-cta-solid { border-color:#bb0b22; background:#a4081d; }
 .halloween-page .halloween-cta-solid:hover { border-color:#ef263c; background:#c20b24; }
-.halloween-page :is(.arrival-section,.experience-section,.fears-section,.terror-section,.highlights-section,.dress-code-section,.gallery-section,.reserve-section,.halloween-footer) { background-color:#070607; }
+.halloween-page :is(.arrival-section,.experience-section,.fears-section,.terror-section,.highlights-section,.dress-code-section,.gallery-section,.reserve-section,.tickets-booking-section,.halloween-footer) { background-color:#070607; }
 .halloween-page .arrival-section { background:#090607; }
 .halloween-page .arrival-art { background:radial-gradient(ellipse at 67% 28%,#3a151a 0,#211014 30%,#10090c 70%,#070607 100%); }
 .halloween-page .arrival-art-moon { background:#67212b; box-shadow:0 0 55px 10px #c0122838; }
@@ -3453,5 +3453,744 @@
   }
 }
 
+/* ────────────────────────────────────────────────────────────
+   EARLY BIRD TICKET BOOKING & KONFHUB WIDGET STYLES
+   ──────────────────────────────────────────────────────────── */
+.halloween-nav-links .nav-tickets-link {
+  color: #ff3348 !important;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 51, 72, 0.45);
+  background: rgba(164, 9, 32, 0.18);
+  box-shadow: 0 0 15px rgba(255, 51, 72, 0.25);
+  transition: all 0.25s ease;
+  letter-spacing: 0.12em !important;
+}
 
+.halloween-nav-links .nav-tickets-link:hover {
+  background: rgba(255, 51, 72, 0.35);
+  border-color: #ff3348;
+  color: #ffffff !important;
+  box-shadow: 0 0 25px rgba(255, 51, 72, 0.65);
+  transform: translateY(-1px);
+}
+
+.tickets-booking-section {
+  position: relative;
+  padding: clamp(70px, 9vw, 120px) clamp(16px, 4.5vw, 36px);
+  background-color: #070607;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  justify-content: center;
+}
+
+.tickets-section-glow {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(800px, 90vw);
+  height: 500px;
+  background: radial-gradient(ellipse at center, rgba(164, 9, 32, 0.18) 0%, rgba(92, 6, 20, 0.08) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(40px);
+}
+
+.tickets-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tickets-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto clamp(28px, 4vw, 42px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tickets-badge-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 51, 72, 0.35);
+  background: rgba(164, 9, 32, 0.15);
+  box-shadow: 0 0 20px rgba(215, 25, 45, 0.25);
+  margin-bottom: 14px;
+}
+
+.tickets-badge-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff3348;
+  box-shadow: 0 0 10px #ff3348;
+  animation: ticket-badge-blink 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes ticket-badge-blink {
+  0% { transform: scale(0.85); opacity: 0.6; }
+  100% { transform: scale(1.25); opacity: 1; box-shadow: 0 0 16px #ff3348; }
+}
+
+.tickets-badge-text {
+  font-size: clamp(9px, 1.2vw, 11px);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #ffe4b0;
+  text-transform: uppercase;
+}
+
+.tickets-title {
+  margin: 10px 0 14px;
+  font-family: 'Nosifer', 'Bowlby One SC', 'Alfa Slab One', 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: clamp(34px, 5.5vw, 64px);
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  color: #ede7df;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.tickets-title-accent {
+  background: linear-gradient(180deg, #ff5568 0%, #ee0a22 45%, #910312 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 18px rgba(238, 10, 34, 0.65));
+}
+
+.tickets-frat-junction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 360px;
+  margin: 8px auto 16px;
+}
+
+.tickets-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(238, 10, 34, 0.4), transparent);
+}
+
+.tickets-sigil {
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  color: #c9152a;
+  font-weight: 600;
+}
+
+.tickets-lead {
+  font-size: clamp(14px, 1.6vw, 17px);
+  color: #ccc3b8;
+  line-height: 1.6;
+  margin: 0 0 24px;
+  max-width: 580px;
+  text-align: center;
+}
+
+/* Pricing Highlight Pill */
+.tickets-pricing-pill {
+  width: 100%;
+  max-width: 620px;
+  background: linear-gradient(135deg, rgba(26, 12, 18, 0.85) 0%, rgba(14, 8, 11, 0.95) 100%);
+  border: 1px solid rgba(255, 51, 72, 0.35);
+  border-radius: 14px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), inset 0 0 25px rgba(164, 9, 32, 0.15);
+  backdrop-filter: blur(8px);
+}
+
+.pricing-left {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pricing-tier-name {
+  font-size: clamp(13px, 1.4vw, 15px);
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.pricing-tier-perks {
+  font-size: clamp(11px, 1.1vw, 12px);
+  color: #b5aba4;
+}
+
+.pricing-right {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.pricing-amount {
+  font-size: clamp(26px, 3.2vw, 34px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #ff3348;
+  line-height: 1;
+  text-shadow: 0 0 16px rgba(255, 51, 72, 0.5);
+  font-family: "Montserrat", sans-serif;
+}
+
+.pricing-tax-note {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #948b87;
+  text-transform: uppercase;
+}
+
+/* KonfHub Widget Card */
+.konfhub-widget-card {
+  width: 100%;
+  border-radius: 16px;
+  background: #11090d;
+  border: 1px solid rgba(255, 51, 72, 0.32);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(225, 12, 34, 0.18);
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.konfhub-widget-card:hover {
+  border-color: rgba(255, 51, 72, 0.5);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 45px rgba(225, 12, 34, 0.25);
+}
+
+.widget-card-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 20px;
+  background: linear-gradient(90deg, #180b11 0%, #12070c 100%);
+  border-bottom: 1px solid rgba(255, 51, 72, 0.18);
+}
+
+.widget-secure-tag {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #ff4d61;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.widget-secure-tag .secure-icon {
+  color: #00d26a;
+}
+
+.widget-payment-methods {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #8c7f79;
+}
+
+.widget-iframe-container {
+  width: 100%;
+  background: #f6eded;
+  position: relative;
+  overflow: hidden;
+}
+
+.konfhub-iframe {
+  display: block;
+  width: 100%;
+  height: 560px;
+  min-height: 500px;
+  border: none;
+  background: #f6eded;
+}
+
+.widget-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 20px;
+  background: #0d060a;
+  border-top: 1px solid rgba(255, 51, 72, 0.14);
+}
+
+.widget-guarantee-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #9e938f;
+  font-size: 11px;
+}
+
+/* Secondary Squad / VIP Inquiry Button */
+.tickets-alt-action {
+  margin-top: 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.tickets-alt-text {
+  font-size: 13px;
+  color: #8a7e78;
+  margin: 0;
+}
+
+.tickets-inquiry-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #dcd3cb;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.tickets-inquiry-btn:hover {
+  background: rgba(255, 51, 72, 0.1);
+  border-color: rgba(255, 51, 72, 0.4);
+  color: #ff3348;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .tickets-pricing-pill {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    padding: 14px 18px;
+  }
+  .pricing-left, .pricing-right {
+    text-align: center;
+    align-items: center;
+  }
+  .konfhub-iframe {
+    height: 640px;
+  }
+  .widget-card-topbar, .widget-card-footer {
+    justify-content: center;
+    text-align: center;
+    padding: 10px 14px;
+  }
+  .halloween-nav-links .nav-tickets-link {
+    display: none;
+  }
+}
+
+/* Landing Page Ticket Showcase Invitation Card */
+.tickets-invitation-card {
+  width: 100%;
+  max-width: 680px;
+  background: linear-gradient(135deg, rgba(20, 10, 15, 0.92) 0%, rgba(12, 6, 9, 0.98) 100%);
+  border: 1px solid rgba(255, 51, 72, 0.35);
+  border-radius: 16px;
+  padding: 32px 30px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(225, 12, 34, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.invitation-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.invitation-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: #d8cec5;
+}
+
+.invitation-feature-item .feature-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff3348;
+  box-shadow: 0 0 8px #ff3348;
+  flex-shrink: 0;
+}
+
+.invitation-cta-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.tickets-proceed-btn {
+  width: 100%;
+  max-width: 440px;
+  justify-content: center;
+}
+
+.invitation-trust-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #928681;
+}
+
+.invitation-trust-note .trust-icon {
+  color: #00d26a;
+}
+
+/* Hero Lock Hint & Booking Group */
+.hero-booking-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-locked-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 215, 140, 0.9);
+  background: rgba(25, 12, 18, 0.75);
+  border: 1px solid rgba(223, 180, 88, 0.35);
+  padding: 5px 14px;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+}
+
+.hero-locked-hint--active {
+  color: #ff8090;
+  border-color: rgba(255, 51, 72, 0.4);
+}
+
+.hero-locked-hint .hero-lock-icon {
+  color: #e5b95a;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   DUAL TIER SHOWCASE GRID (EARLY BIRD & REGULAR BIRD)
+   ══════════════════════════════════════════════════════════════════════════════ */
+.tickets-tier-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.ticket-tier-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(145deg, rgba(22, 10, 16, 0.95) 0%, rgba(12, 6, 10, 0.98) 100%);
+  border-radius: 18px;
+  padding: 32px 28px 28px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+/* Active Tier State */
+.ticket-tier-card.active-tier {
+  border: 1px solid rgba(255, 51, 72, 0.45);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75), 0 0 35px rgba(225, 12, 34, 0.18), inset 0 0 20px rgba(225, 12, 34, 0.06);
+}
+
+.ticket-tier-card.active-tier:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 51, 72, 0.7);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.85), 0 0 45px rgba(225, 12, 34, 0.28);
+}
+
+/* Locked Tier State */
+.ticket-tier-card.locked-tier {
+  border: 1px dashed rgba(223, 180, 88, 0.35);
+  background: linear-gradient(145deg, rgba(18, 12, 16, 0.88) 0%, rgba(10, 6, 9, 0.94) 100%);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+  opacity: 0.95;
+}
+
+/* Closed Tier State */
+.ticket-tier-card.closed-tier {
+  border: 1px solid rgba(80, 45, 55, 0.3);
+  background: linear-gradient(145deg, rgba(14, 8, 11, 0.75) 0%, rgba(8, 4, 6, 0.85) 100%);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  opacity: 0.65;
+  filter: grayscale(0.25);
+}
+
+/* Top popular / active ribbon */
+.card-popular-ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(90deg, #ff1a35 0%, #b30519 100%);
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 16px 4px 18px;
+  border-bottom-left-radius: 12px;
+  box-shadow: 0 4px 12px rgba(255, 26, 53, 0.4);
+}
+
+/* Header & tags */
+.tier-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tier-tag-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tier-name-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #dfb458;
+  text-transform: uppercase;
+}
+
+.tier-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.tier-status-open {
+  background: rgba(0, 210, 106, 0.14);
+  color: #34d399;
+  border: 1px solid rgba(0, 210, 106, 0.35);
+}
+
+.tier-status-locked {
+  background: rgba(223, 180, 88, 0.12);
+  color: #f7d28b;
+  border: 1px solid rgba(223, 180, 88, 0.35);
+}
+
+.tier-status-updating {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.tier-status-closed {
+  background: rgba(255, 255, 255, 0.06);
+  color: #9b8a85;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.tier-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px #34d399;
+  animation: pulseGreen 1.8s infinite;
+}
+
+@keyframes pulseGreen {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.tier-card-title {
+  font-family: var(--font-display, inherit);
+  font-size: clamp(20px, 2.5vw, 24px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.tier-card-allocation {
+  font-size: 11px;
+  color: #a89a94;
+  margin: 0;
+  letter-spacing: 0.04em;
+}
+
+/* Price Box */
+.tier-card-price-box {
+  margin: 20px 0;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tier-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.tier-price-val {
+  font-family: var(--font-display, inherit);
+  font-size: clamp(28px, 3.2vw, 36px);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.tier-price-val.price-struck {
+  text-decoration: line-through;
+  opacity: 0.5;
+  color: #8c7d78;
+}
+
+.tier-price-cur {
+  font-size: 12px;
+  font-weight: 600;
+  color: #dfb458;
+  letter-spacing: 0.08em;
+}
+
+.tier-tax-label {
+  font-size: 11px;
+  color: #92857f;
+  line-height: 1.4;
+}
+
+/* Features List */
+.tier-card-features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.tier-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: #d8cec5;
+}
+
+.feature-check-icon {
+  color: #e5b95a;
+  flex-shrink: 0;
+}
+
+/* Card Action Area */
+.tier-card-action {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.tier-cta-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.tier-cta-locked-btn,
+.tier-cta-disabled-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-family: var(--font-display, inherit);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: not-allowed;
+  transition: all 0.2s ease;
+}
+
+.tier-cta-locked-btn {
+  background: rgba(35, 20, 26, 0.85);
+  color: #d1b87a;
+  border: 1px solid rgba(223, 180, 88, 0.4);
+}
+
+.tier-cta-disabled-btn {
+  background: rgba(25, 14, 18, 0.7);
+  color: #7d6e6a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tier-btn-icon {
+  flex-shrink: 0;
+}
+
+.tier-card-footer-note {
+  font-size: 10px;
+  text-align: center;
+  color: #857672;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 768px) {
+  .tickets-tier-grid {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+    gap: 20px;
+  }
+}
 

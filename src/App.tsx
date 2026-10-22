@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { CustomCursor } from './components/CustomCursor';
 import { GlobalSmoothScroll } from './components/GlobalSmoothScroll';
 import { HalloweenLandingPage } from './pages/HalloweenLandingPage';
+import { HalloweenTicketsPage } from './pages/HalloweenTicketsPage';
 
 const PageFallback = () => (
   <div className="min-h-screen bg-[#070508] flex flex-col items-center justify-center text-[#d7192d]">
@@ -74,6 +75,8 @@ function App() {
         <GlobalSmoothScroll>
           <Suspense fallback={<PageFallback />}>
             <Routes>
+              <Route path="/" element={<HalloweenLandingPage />} />
+              <Route path="/tickets" element={<HalloweenTicketsPage />} />
               <Route path="*" element={<HalloweenLandingPage />} />
             </Routes>
           </Suspense>

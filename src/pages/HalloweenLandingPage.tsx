@@ -1,9 +1,11 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { useReducedMotion } from "framer-motion";
-import { ArrowRight, Check, Globe, Lock, Trash2, UserPlus, X } from "lucide-react";
+import { ArrowRight, Check, Clock, Globe, Lock, Trash2, UserPlus, X } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { halloweenEvent } from "../config/halloweenEvent";
+import { useTicketPhase } from "../config/ticketSchedule";
 import "./HalloweenLandingPage.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -17,6 +19,7 @@ export interface CompanionSoul {
 }
 
 export const HalloweenLandingPage: React.FC = () => {
+  const ticket = useTicketPhase();
   const pageRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion() ?? false;
   const [heroVideoAvailable, setHeroVideoAvailable] = useState(false);
@@ -309,6 +312,15 @@ export const HalloweenLandingPage: React.FC = () => {
           <a href="#party">THE PARTY</a>
           <a href="#experience">THE NIGHT</a>
           <a href="#highlights">HIGHLIGHTS</a>
+          {ticket.isBookingEnabled ? (
+            <Link to="/tickets" className="nav-tickets-link">
+              {ticket.ticketLabel} · {ticket.formattedPrice}
+            </Link>
+          ) : (
+            <span className="nav-tickets-link nav-tickets-disabled">
+              {ticket.ticketLabel}
+            </span>
+          )}
         </div>
       </nav>
       <div className="hero-copy">
@@ -385,22 +397,50 @@ export const HalloweenLandingPage: React.FC = () => {
           TWO WORLDS COLLIDE. <span className="tagline-highlight">ONE NIGHT TAKES OVER.</span>
         </p>
         <div className="hero-actions">
-          <button
-            type="button"
-            className="halloween-cta halloween-cta-bleeding halloween-cta-solid"
-            onClick={() => setIsApplicationModalOpen(true)}
-            aria-label="Open application form"
-          >
-            <span className="cta-label">ENTER IF YOU DARE <ArrowRight size={15}/></span>
-            <span className="cta-blood-drips" aria-hidden="true">
-              <svg viewBox="0 0 240 28" className="cta-drips-svg" preserveAspectRatio="none">
-                <path d="M0,0 L240,0 L240,3 Q235,3 232,7 Q229,12 226,12 Q223,12 220,5 Q215,3 208,3 Q200,3 196,16 Q192,26 186,26 Q180,26 177,14 Q175,3 166,3 Q160,3 156,9 Q153,13 149,13 Q145,13 142,4 Q135,3 125,3 Q118,3 113,18 Q108,28 102,28 Q96,28 92,16 Q90,3 80,3 Q74,3 70,8 Q67,11 63,11 Q59,11 56,4 Q48,3 38,3 Q31,3 26,17 Q22,25 16,25 Q11,25 8,13 Q6,3 0,3 Z" fill="currentColor" />
-              </svg>
-              <span className="cta-blood-drop drop-1" />
-              <span className="cta-blood-drop drop-2" />
-              <span className="cta-blood-drop drop-3" />
-            </span>
-          </button>
+          {ticket.isBookingEnabled ? (
+            <div className="hero-booking-group">
+              <Link
+                to={ticket.phase === "early_bird" ? "/tickets?tier=early_bird" : "/tickets?tier=regular_bird"}
+                className="halloween-cta halloween-cta-bleeding halloween-cta-solid"
+                aria-label={`Book ${ticket.ticketLabel} Tickets`}
+              >
+                <span className="cta-label">{ticket.ctaFullLabel} <ArrowRight size={15}/></span>
+                <span className="cta-blood-drips" aria-hidden="true">
+                  <svg viewBox="0 0 240 28" className="cta-drips-svg" preserveAspectRatio="none">
+                    <path d="M0,0 L240,0 L240,3 Q235,3 232,7 Q229,12 226,12 Q223,12 220,5 Q215,3 208,3 Q200,3 196,16 Q192,26 186,26 Q180,26 177,14 Q175,3 166,3 Q160,3 156,9 Q153,13 149,13 Q145,13 142,4 Q135,3 125,3 Q118,3 113,18 Q108,28 102,28 Q96,28 92,16 Q90,3 80,3 Q74,3 70,8 Q67,11 63,11 Q59,11 56,4 Q48,3 38,3 Q31,3 26,17 Q22,25 16,25 Q11,25 8,13 Q6,3 0,3 Z" fill="currentColor" />
+                  </svg>
+                  <span className="cta-blood-drop drop-1" />
+                  <span className="cta-blood-drop drop-2" />
+                  <span className="cta-blood-drop drop-3" />
+                </span>
+              </Link>
+              {ticket.regularBirdState.isLocked && (
+                <div className="hero-locked-hint">
+                  <Lock size={12} className="hero-lock-icon" />
+                  <span>Regular Bird (₹2,199) unlocks Oct 26 at 12:01 AM IST</span>
+                </div>
+              )}
+              {ticket.regularBirdState.isOpen && (
+                <div className="hero-locked-hint hero-locked-hint--active">
+                  <span>Early Bird Ended · Final 50 Regular Bird Tickets Active</span>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="hero-disabled-wrap">
+              <button
+                type="button"
+                disabled
+                className="halloween-cta halloween-cta-solid halloween-cta-disabled"
+                aria-disabled="true"
+              >
+                <span className="cta-label">{ticket.ctaLabel}</span>
+              </button>
+              {ticket.statusMessage && (
+                <p className="hero-transition-note">{ticket.statusMessage}</p>
+              )}
+            </div>
+          )}
         </div>
       </div>
       <div className="hero-side-note" aria-hidden="true">ADMIT ONE &nbsp; / &nbsp; IF YOU DARE</div>
@@ -649,6 +689,277 @@ export const HalloweenLandingPage: React.FC = () => {
       </div>
     </section>
 
+    {/* ── TICKET BOOKING SHOWCASE SECTION ── */}
+    <section className="tickets-booking-section horror-reveal" id="tickets" aria-labelledby="tickets-section-title">
+      <div className="tickets-section-glow" aria-hidden="true" />
+      <div className="tickets-container">
+        {/* Section Header */}
+        <div className="tickets-header">
+          <div className="tickets-badge-wrap">
+            <span className="tickets-badge-pulse" />
+            <span className="tickets-badge-text">
+              OFFICIAL KONFHUB PASSES
+            </span>
+          </div>
+
+          <h2 className="tickets-title" id="tickets-section-title">
+            CLAIM YOUR <span className="tickets-title-accent">PASS</span>
+          </h2>
+
+          <div className="tickets-frat-junction" aria-hidden="true">
+            <span className="tickets-line" />
+            <span className="tickets-sigil">Φ · Ρ · Α · Τ</span>
+            <span className="tickets-line" />
+          </div>
+
+          <p className="tickets-lead">
+            The gates open soon. Entry is strictly guarded and spots are limited to 50 souls per tier.
+          </p>
+        </div>
+
+        {/* Dual Tier Showcase Grid */}
+        <div className="tickets-tier-grid">
+          {/* 1. EARLY BIRD TIER CARD */}
+          <div className={`ticket-tier-card ${ticket.earlyBirdState.isOpen ? "active-tier" : "closed-tier"}`}>
+            {ticket.earlyBirdState.isOpen && (
+              <div className="card-popular-ribbon">
+                <span>PHASE 1 ACTIVE</span>
+              </div>
+            )}
+            <div className="tier-card-header">
+              <div className="tier-tag-row">
+                <span className="tier-name-tag">TIER 01</span>
+                {ticket.earlyBirdState.isOpen ? (
+                  <span className="tier-status-badge tier-status-open">
+                    <span className="tier-pulse-dot" /> ACTIVE NOW
+                  </span>
+                ) : (
+                  <span className="tier-status-badge tier-status-closed">
+                    <X size={12} /> TIER CLOSED
+                  </span>
+                )}
+              </div>
+              <h3 className="tier-card-title">EARLY BIRD PASS</h3>
+              <p className="tier-card-allocation">{ticket.earlyBirdState.allocationText}</p>
+            </div>
+
+            <div className="tier-card-price-box">
+              <div className="tier-price-row">
+                <span className={`tier-price-val ${ticket.earlyBirdState.isOpen ? "" : "price-struck"}`}>
+                  {ticket.earlyBirdState.formattedPrice}
+                </span>
+                <span className="tier-price-cur">INR</span>
+              </div>
+              <span className="tier-tax-label">
+                {ticket.earlyBirdState.isOpen ? "All taxes inclusive · First 50 spots" : "Allocation ended on 26 Oct, 12:00 AM IST"}
+              </span>
+            </div>
+
+            <div className="tier-card-features">
+              <div className="tier-feature-item">
+                <Check size={14} className="feature-check-icon" />
+                <span>All Access to 3 Haunted Stages & Frat Zones</span>
+              </div>
+              <div className="tier-feature-item">
+                <Check size={14} className="feature-check-icon" />
+                <span>Fast-Track Digital QR Pass via KonfHub</span>
+              </div>
+              <div className="tier-feature-item">
+                <Check size={14} className="feature-check-icon" />
+                <span>Official Themed Costume Contest Entry</span>
+              </div>
+              <div className="tier-feature-item">
+                <Check size={14} className="feature-check-icon" />
+                <span>Secret Hyderabad Venue Reveal</span>
+              </div>
+            </div>
+
+            <div className="tier-card-action">
+              {ticket.earlyBirdState.isOpen ? (
+                <Link
+                  to="/tickets?tier=early_bird"
+                  className="halloween-cta halloween-cta-bleeding halloween-cta-solid tier-cta-btn"
+                  aria-label="Book Early Bird Pass"
+                >
+                  <span className="cta-label">
+                    <span>BOOK EARLY BIRD</span>
+                    <ArrowRight size={15} />
+                  </span>
+                  <span className="cta-blood-drips" aria-hidden="true">
+                    <svg viewBox="0 0 240 28" className="cta-drips-svg" preserveAspectRatio="none">
+                      <path d="M0,0 L240,0 L240,3 Q235,3 232,7 Q229,12 226,12 Q223,12 220,5 Q215,3 208,3 Q200,3 196,16 Q192,26 186,26 Q180,26 177,14 Q175,3 166,3 Q160,3 156,9 Q153,13 149,13 Q145,13 142,4 Q135,3 125,3 Q118,3 113,18 Q108,28 102,28 Q96,28 92,16 Q90,3 80,3 Q74,3 70,8 Q67,11 63,11 Q59,11 56,4 Q48,3 38,3 Q31,3 26,17 Q22,25 16,25 Q11,25 8,13 Q6,3 0,3 Z" fill="currentColor" />
+                    </svg>
+                    <span className="cta-blood-drop drop-1" />
+                    <span className="cta-blood-drop drop-2" />
+                    <span className="cta-blood-drop drop-3" />
+                  </span>
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  disabled
+                  className="halloween-cta-disabled tier-cta-disabled-btn"
+                  aria-disabled="true"
+                >
+                  <X size={14} className="tier-btn-icon" />
+                  <span>EARLY BIRD ENDED</span>
+                </button>
+              )}
+              <span className="tier-card-footer-note">
+                {ticket.earlyBirdState.isOpen ? "Available until 25 Oct, 11:59 PM IST" : "Sales ended on 26 Oct, 12:00 AM IST"}
+              </span>
+            </div>
+          </div>
+
+          {/* 2. REGULAR BIRD TIER CARD */}
+          <div className={`ticket-tier-card ${ticket.regularBirdState.isOpen ? "active-tier" : ticket.regularBirdState.isLocked ? "locked-tier" : "closed-tier"}`}>
+            {ticket.regularBirdState.isOpen && (
+              <div className="card-popular-ribbon">
+                <span>PHASE 2 ACTIVE</span>
+              </div>
+            )}
+            <div className="tier-card-header">
+              <div className="tier-tag-row">
+                <span className="tier-name-tag">TIER 02</span>
+                {ticket.regularBirdState.isLocked ? (
+                  <span className="tier-status-badge tier-status-locked">
+                    <Lock size={12} /> LOCKED
+                  </span>
+                ) : ticket.regularBirdState.isTransitioning ? (
+                  <span className="tier-status-badge tier-status-updating">
+                    <Clock size={12} /> UPDATING
+                  </span>
+                ) : ticket.regularBirdState.isOpen ? (
+                  <span className="tier-status-badge tier-status-open">
+                    <span className="tier-pulse-dot" /> ACTIVE NOW
+                  </span>
+                ) : (
+                  <span className="tier-status-badge tier-status-closed">
+                    <X size={12} /> TIER CLOSED
+                  </span>
+                )}
+              </div>
+              <h3 className="tier-card-title">REGULAR BIRD PASS</h3>
+              <p className="tier-card-allocation">{ticket.regularBirdState.allocationText}</p>
+            </div>
+
+            <div className="tier-card-price-box">
+              <div className="tier-price-row">
+                <span className={`tier-price-val ${ticket.regularBirdState.isClosed ? "price-struck" : ""}`}>
+                  {ticket.regularBirdState.formattedPrice}
+                </span>
+                <span className="tier-price-cur">INR</span>
+              </div>
+              <span className="tier-tax-label">
+                {ticket.regularBirdState.isLocked
+                  ? "Unlocks automatically once Early Bird ends"
+                  : ticket.regularBirdState.isTransitioning
+                  ? "Price update in progress — opens at 12:01 AM"
+                  : ticket.regularBirdState.isOpen
+                  ? "All taxes inclusive · Final 50 spots"
+                  : "Sales ended on 31 Oct, 2:00 PM IST"}
+              </span>
+            </div>
+
+            <div className="tier-card-features">
+              <div className="tier-feature-item">
+                <Check size={14} className="feature-check-icon" />
+                <span>All Access to 3 Haunted Stages & Frat Zones</span>
+              </div>
+              <div className="tier-feature-item">
+                <Check size={14} className="feature-check-icon" />
+                <span>Fast-Track Digital QR Pass via KonfHub</span>
+              </div>
+              <div className="tier-feature-item">
+                <Check size={14} className="feature-check-icon" />
+                <span>Official Themed Costume Contest Entry</span>
+              </div>
+              <div className="tier-feature-item">
+                <Check size={14} className="feature-check-icon" />
+                <span>Secret Hyderabad Venue Reveal</span>
+              </div>
+            </div>
+
+            <div className="tier-card-action">
+              {ticket.regularBirdState.isLocked ? (
+                <button
+                  type="button"
+                  disabled
+                  className="halloween-cta-disabled tier-cta-locked-btn"
+                  aria-disabled="true"
+                  title="Locked until Early Bird ends. Unlocks 26 Oct at 12:01 AM IST."
+                >
+                  <Lock size={15} className="tier-btn-icon" />
+                  <span>LOCKED TILL EARLY BIRD ENDS</span>
+                </button>
+              ) : ticket.regularBirdState.isTransitioning ? (
+                <button
+                  type="button"
+                  disabled
+                  className="halloween-cta-disabled tier-cta-locked-btn"
+                  aria-disabled="true"
+                >
+                  <Clock size={15} className="tier-btn-icon" />
+                  <span>PRICES UPDATING...</span>
+                </button>
+              ) : ticket.regularBirdState.isOpen ? (
+                <Link
+                  to="/tickets?tier=regular_bird"
+                  className="halloween-cta halloween-cta-bleeding halloween-cta-solid tier-cta-btn"
+                  aria-label="Book Regular Bird Pass"
+                >
+                  <span className="cta-label">
+                    <span>BOOK REGULAR BIRD</span>
+                    <ArrowRight size={15} />
+                  </span>
+                  <span className="cta-blood-drips" aria-hidden="true">
+                    <svg viewBox="0 0 240 28" className="cta-drips-svg" preserveAspectRatio="none">
+                      <path d="M0,0 L240,0 L240,3 Q235,3 232,7 Q229,12 226,12 Q223,12 220,5 Q215,3 208,3 Q200,3 196,16 Q192,26 186,26 Q180,26 177,14 Q175,3 166,3 Q160,3 156,9 Q153,13 149,13 Q145,13 142,4 Q135,3 125,3 Q118,3 113,18 Q108,28 102,28 Q96,28 92,16 Q90,3 80,3 Q74,3 70,8 Q67,11 63,11 Q59,11 56,4 Q48,3 38,3 Q31,3 26,17 Q22,25 16,25 Q11,25 8,13 Q6,3 0,3 Z" fill="currentColor" />
+                    </svg>
+                    <span className="cta-blood-drop drop-1" />
+                    <span className="cta-blood-drop drop-2" />
+                    <span className="cta-blood-drop drop-3" />
+                  </span>
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  disabled
+                  className="halloween-cta-disabled tier-cta-disabled-btn"
+                  aria-disabled="true"
+                >
+                  <X size={14} className="tier-btn-icon" />
+                  <span>TICKET SALES CLOSED</span>
+                </button>
+              )}
+              <span className="tier-card-footer-note">
+                {ticket.regularBirdState.isLocked
+                  ? "Unlocks automatically 26 Oct, 12:01 AM IST"
+                  : ticket.regularBirdState.isOpen
+                  ? "Available until 31 Oct, 2:00 PM IST"
+                  : "Sales closed"}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Special Inquiry / Group Concierge (Keeps Google Sheets Application Modal accessible) */}
+        <div className="tickets-alt-action">
+          <p className="tickets-alt-text">
+            Arriving with a large squad (7+ souls) or looking for VIP table reservations?
+          </p>
+          <button
+            type="button"
+            className="tickets-inquiry-btn"
+            onClick={() => setIsApplicationModalOpen(true)}
+          >
+            <span>Submit VIP / Squad Application</span>
+            <ArrowRight size={13} />
+          </button>
+        </div>
+      </div>
+    </section>
+
 
     {/* ── SIMPLE GOTHIC FRAT THEMED FOOTER ── */}
     <footer className="halloween-footer" aria-label="Event Footer">
@@ -681,22 +992,31 @@ export const HalloweenLandingPage: React.FC = () => {
 
         {/* Hero Section CTA in Footer */}
         <div className="footer-hero-cta-wrap">
-          <button
-            type="button"
-            className="halloween-cta halloween-cta-bleeding halloween-cta-solid footer-hero-cta-btn"
-            onClick={() => setIsApplicationModalOpen(true)}
-            aria-label="Open application form"
-          >
-            <span className="cta-label">ENTER IF YOU DARE <ArrowRight size={15}/></span>
-            <span className="cta-blood-drips" aria-hidden="true">
-              <svg viewBox="0 0 240 28" className="cta-drips-svg" preserveAspectRatio="none">
-                <path d="M0,0 L240,0 L240,3 Q235,3 232,7 Q229,12 226,12 Q223,12 220,5 Q215,3 208,3 Q200,3 196,16 Q192,26 186,26 Q180,26 177,14 Q175,3 166,3 Q160,3 156,9 Q153,13 149,13 Q145,13 142,4 Q135,3 125,3 Q118,3 113,18 Q108,28 102,28 Q96,28 92,16 Q90,3 80,3 Q74,3 70,8 Q67,11 63,11 Q59,11 56,4 Q48,3 38,3 Q31,3 26,17 Q22,25 16,25 Q11,25 8,13 Q6,3 0,3 Z" fill="currentColor" />
-              </svg>
-              <span className="cta-blood-drop drop-1" />
-              <span className="cta-blood-drop drop-2" />
-              <span className="cta-blood-drop drop-3" />
-            </span>
-          </button>
+          {ticket.isBookingEnabled ? (
+            <Link
+              to="/tickets"
+              className="halloween-cta halloween-cta-bleeding halloween-cta-solid footer-hero-cta-btn"
+              aria-label={`Get ${ticket.ticketLabel} Tickets`}
+            >
+              <span className="cta-label">{ticket.ctaFullLabel} <ArrowRight size={15}/></span>
+              <span className="cta-blood-drips" aria-hidden="true">
+                <svg viewBox="0 0 240 28" className="cta-drips-svg" preserveAspectRatio="none">
+                  <path d="M0,0 L240,0 L240,3 Q235,3 232,7 Q229,12 226,12 Q223,12 220,5 Q215,3 208,3 Q200,3 196,16 Q192,26 186,26 Q180,26 177,14 Q175,3 166,3 Q160,3 156,9 Q153,13 149,13 Q145,13 142,4 Q135,3 125,3 Q118,3 113,18 Q108,28 102,28 Q96,28 92,16 Q90,3 80,3 Q74,3 70,8 Q67,11 63,11 Q59,11 56,4 Q48,3 38,3 Q31,3 26,17 Q22,25 16,25 Q11,25 8,13 Q6,3 0,3 Z" fill="currentColor" />
+                </svg>
+                <span className="cta-blood-drop drop-1" />
+                <span className="cta-blood-drop drop-2" />
+                <span className="cta-blood-drop drop-3" />
+              </span>
+            </Link>
+          ) : (
+            <button
+              type="button"
+              disabled
+              className="halloween-cta halloween-cta-solid halloween-cta-disabled footer-hero-cta-btn"
+            >
+              <span className="cta-label">{ticket.ctaLabel}</span>
+            </button>
+          )}
         </div>
 
         {/* Sections in Text Format Only */}
@@ -710,6 +1030,8 @@ export const HalloweenLandingPage: React.FC = () => {
           <a href="#highlights" className="footer-text-link">EVENT HIGHLIGHTS</a>
           <span className="footer-text-dot" aria-hidden="true">·</span>
           <a href="#dress-code" className="footer-text-link">THE DRESS CODE</a>
+          <span className="footer-text-dot" aria-hidden="true">·</span>
+          <Link to="/tickets" className="footer-text-link">{ticket.ticketLabel} TICKETS</Link>
         </nav>
 
         {/* Themed Social & Website Icons */}
